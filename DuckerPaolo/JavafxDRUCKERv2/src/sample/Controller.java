@@ -1,15 +1,9 @@
 package sample;
 
 import javafx.fxml.FXML;
-import javafx.print.PageLayout;
-import javafx.print.PrinterJob;
+import javafx.print.*;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
-import javafx.scene.transform.Scale;
-import javafx.scene.web.WebView;
-import javafx.stage.Window;
-
-import static java.lang.StrictMath.min;
 
 
 public class Controller {
@@ -18,38 +12,28 @@ public class Controller {
     @FXML
     void handleButton(){
 
-        String Bestellung=new String("Bestellung:\n" +
+        String Bestellung=new String("\n" +
+                "Bestellung:\n" +
                 "2 Zwiebeln\t  2*15€=\t30€\n" +
                 "3 Bier\t  3*3€=\t9€\n");
-
-
             Text t= new Text();
             t.setText(Bestellung);
+        Printer printer = Printer.getDefaultPrinter();
+        PageLayout pageLayout=printer.createPageLayout(Paper.A4, PageOrientation.PORTRAIT, 0,0,200,0);
 
             PrinterJob job = PrinterJob.createPrinterJob();
             if (job != null) {
-
-
-
-                PageLayout pageLayout = job.getPrinter().getDefaultPageLayout();
-
-                
-                
-                
                 System.out.println(job.getJobSettings());
                 boolean p=job.showPrintDialog(null);
-                //job.showPrintDialog(null);
-                job.showPageSetupDialog(null);
+                job.showPrintDialog(null);
 
 
-                /*boolean success = job.printPage(t);
+                boolean success = job.printPage(pageLayout,t);
                 if (success) {
                     job.endJob();
-                }*/
-                job.endJob();
+                }
             }
 
 
     }
-
 }
