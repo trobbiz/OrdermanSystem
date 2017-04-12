@@ -1,0 +1,10 @@
+https://docs.oracle.com/javase/tutorial/uiswing/misc/printtext.html
+https://coderanch.com/t/550895/java/Direct-Printing-text-file-default
+
+Java fx
+https://docs.oracle.com/javase/8/javafx/api/javafx/print/PrinterJob.html
+
+jobsettings
+https://docs.oracle.com/javase/8/javafx/api/javafx/print/JobSettings.html
+
+https://www.youtube.com/watch?v=VEMFkDdSXZs
