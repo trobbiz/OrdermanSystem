@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 public class Main extends Application {
 
     @Override
@@ -14,10 +16,19 @@ public class Main extends Application {
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
+        DBVerbindung();
+    }
+    public void DBVerbindung(){
+        ArrayList<Auftrag> Auftragsliste= new ArrayList<Auftrag>();
+        DBSchnittstelle DB = new DBSchnittstelle();
+        Auftragsliste=DB.Bestellauswahl(Auftragsliste);
+        for (int i=0; i<Auftragsliste.size(); i++){
+            System.out.println(i+"\n"+Auftragsliste.get(i).print());
+        }
     }
 
-
     public static void main(String[] args) {
+
         launch(args);
     }
 }
