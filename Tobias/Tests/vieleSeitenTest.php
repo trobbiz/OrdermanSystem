@@ -1,14 +1,21 @@
 <html>
     <head>
         <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-        <script>
-                $(document).ready(function(){
+        
+            <?php
+            
+               if(isSet($_GET["alda"])){ 
+                   echo '<script>$(document).ready(function(){
                     alert("Alda");
                     $("#next").click(function(){
                         $("#blue").load("next.php");
                     });
                 });
-            </script>
+                </script>';
+                } 
+                                     
+            ?>
+            
         <title>Viele Seiten in einer Seite</title>
     </head>
     <body>    
