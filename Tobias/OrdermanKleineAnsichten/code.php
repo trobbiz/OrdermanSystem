@@ -1,16 +1,53 @@
 
 <?php
-
+    session_start(); //Session um die Bestellung zu speichern
     //Hier ist der Abschnitt, der als ajax Schnittstelle fungieren soll
 
-    if(isSet($_POST['action'])){
-        createSparten(null);
+    //Aufruf bei Knopfdruck in "sparteSpeziell.php"
+    if(isSet($_POST['spec_b'])){
+        switch ($_POST["spec_b"]){
+            case "back": //Zurück Button
+            
+            //Wenn nur der Spartenname zurückkommt, wurde nichts bestellt, also wird auch nichts geschrieben
+            if(count($_POST["bestellung"])!=1){
+                if($_SESSION["bestellung"]!=null){
+                    //Wenn eine Bestellung vorhanden ist, wird die neue angehängt
+                    addOrder($_POST["bestellung"]);
+                } else {
+                    //Sonst ist es die erste Bestellung
+                $_SESSION["bestellung"]=$_POST["bestellung"];
+                }
+            }
+                
+            createSparten(null); break;
+            //Abbruch Button
+            case "abort": createSparten(null); break;
+        }
         exit;
     }
-    //Hier endet er
+
+    function addOrder($toAdd){
+        //Die Sparte von der Bestellung auslesen
+        $sparte = $bestellung[0];
+        $alteBestellung = $_SESSION["bestellung"];
+        //Dann alles innerhalb dieser Sparte vonn der Session löschen
+        for($i=0;$i<=count($alteBestellung);$i++){
+            if($alteBestellung[$i]==$sparte){
+                if(explode($alteBestellung)[1]!=''){
+                    array_splice($alteBestellung, $i, 1);
+                } else {
+                    break;
+                }
+            }
+        }
+        //Die neue Bestellung anfügen
+        $_SESSION["bestellung"] = array_merge($_SESSION["bestellung"], $toAdd);
+        //Fertig
+    }
+    //Hier endet der AJAX-Abschnitt
 
     
-    $pageStart='<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>';//Script wird eingefügt
+    $pageStart='<script src="jquery.js"></script>';//Script wird eingefügt
     print $pageStart;
     
 
@@ -59,7 +96,7 @@
             echo "<input type='button' value='$name' id='$name'>";
             echo "<script> $(document).ready(function(){
             $('#$name').click(function(){
-                $('#red').load('sparteSpeziell.php',{ sparte: '$name' });
+                $('#sparten').load('sparteSpeziell.php',{ sparte: '$name' });
             });
             });</script>";
         }
@@ -76,6 +113,23 @@
     }
 
     function showDishes($sparte){
+        
+        $new = true;    //Neue Bestellung
+        
+        if(isSet($_SESSION["bestellung"])){
+            $bestellung = $_SESSION["bestellung"];
+            var_dump($bestellung);
+            
+            for($i=0;$i<count($bestellung);$i++){
+                if($bestellung[$i]==$sparte){  //Der Name der Sparte wird in der Bestellung gesucht
+                    echo "Für diese Sparte liegt eine Bestellung vor";
+                    $new = false;   //Keine neue Bestellung
+                    $indexOfSparte = $i;    //Index in der die Sparte steht wird gespeichert
+                    break;
+                }
+            }
+        }
+        
         $pdo = getPDO();   
         
         $sparte = getSpartenID($pdo, $sparte);  //ID von der Sparte holen
@@ -109,12 +163,63 @@
                         document.getElementById('$i-counter').value = val;
                     });
                 </script>";
-                echo "<td>".$result["name"]."</td>";
+                echo "<td><label id='$i-label'>".$result["name"]."</label></td>";
                 echo "<td>".$result["preis"]."€</td>";
                 echo "<td><input type='button' value='-' id='$i-'><input type='text' readonly value=0 style='text-align: center' id='$i-counter'><input type='button' value='+' id='$i-p'></td>";
             echo "</tr>";
+            $anz = $i+1;
         }
+        if($new==false){    //Wenn schon eine Bestellung für diese Sparte vorliegt, wird die Anzahl der Gerichte verändert
+            showOldOrder($bestellung, $indexOfSparte,$anz);
+        }
+        return $anz;
     }
+
+    function showOldOrder($bestellung, $index,$anz){
+        for ($i=0;$i<$anz;$i++){
+            echo "<script>(function(){";    //Start
+            //Alle Labels durchgehen und mit der Bestellung vergleichen
+            
+            echo "var label = document.getElementById('$i-label').innerHTML;";    //Label auslesen
+            
+            //Für jedes Label alle Inhalte der Bestellung durchgehen
+            for($j=$index+1;$j<count($bestellung);$j++){
+                $NameAnz = explode(":",$bestellung[$j]);
+                if($NameAnz[1]!=''){    //Wenn die neue Sparte anfängt, wird abgebrochen um Zeit zu sparen
+                    echo "if(label=='$NameAnz[0]'){
+                        document.getElementById('$i-counter').value = '$NameAnz[1]';
+                    }";
+                } else {
+                    break;
+                }
+            }
+            echo "})();</script>";   //Ende
+        }
+        
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //Ende der PHP Funktionen
 ?>

@@ -1,8 +1,5 @@
 <?php include_once("code.php"); ?>
 
-<script src="ajax.js" type="text/javascript">
-</script>
-
 <table>
     <tr>
         <th>
@@ -15,11 +12,12 @@
             Anzahl
         </th>
     </tr>
-    <?php showDishes($_POST["sparte"]); ?>
+    <?php $gerichte_anz = showDishes($_POST["sparte"]); ?>
 </table>
-<button id='back' value="back">Zurück</button>
-<button  value="Abbrechen">Abbrechen</button>
+<button value="back" class="spec_b">Zurück</button>
+<button  value="abort" class="spec_b">Abbrechen</button>
 
+<?php include("ajax.php"); ?>
     
 
     
