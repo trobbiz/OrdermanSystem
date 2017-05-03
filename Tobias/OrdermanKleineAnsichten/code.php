@@ -28,21 +28,37 @@
 
     function addOrder($toAdd){
         //Die Sparte von der Bestellung auslesen
-        $sparte = $bestellung[0];
+        $sparte = $toAdd[0];
         $alteBestellung = $_SESSION["bestellung"];
         //Dann alles innerhalb dieser Sparte vonn der Session löschen
-        for($i=0;$i<=count($alteBestellung);$i++){
-            if($alteBestellung[$i]==$sparte){
-                if(explode($alteBestellung)[1]!=''){
-                    array_splice($alteBestellung, $i, 1);
-                } else {
+        $old = false;   //Bool um zu wissen ob man sich innerhalb der Sparte befindet
+        $indexe = array(); //Indexe die gelöscht werden sollen werden gespeichert
+        
+        for($i=0;$i<count($alteBestellung);$i++){
+            $spartenanfang = false;
+            if($alteBestellung[$i]==$sparte){   //Anfang der Sparte ist der Spartenname
+               $old=true;   //Man ist nun innehalb der Sparte
+                $spartenanfang=true;
+                array_push($indexe, $i);    //Der Spartennamenindex wird gespeichert
+            } 
+            
+            if($old==true && $spartenanfang==false){ //Wenn man am Spartennamen vorbei ist
+                if(explode(":", $alteBestellung[$i])[1]==''){
+                    //Hier beginnt eine andere Sparte
+                    $old = false;
                     break;
+                } else {
+                    //Sonst werden die alten Bestellungsindexe gespeichert
+                    array_push($indexe, $i);
                 }
             }
         }
+        //Diese Schleife löscht alle indexe aus $indexe
+        for($i=0;$i<=count($indexe);$i++){
+            array_splice($alteBestellung, $indexe[$i],1);
+        }
         //Die neue Bestellung anfügen
-        $_SESSION["bestellung"] = array_merge($_SESSION["bestellung"], $toAdd);
-        //Fertig
+        $_SESSION["bestellung"] = array_merge($alteBestellung, $toAdd);
     }
     //Hier endet der AJAX-Abschnitt
 
@@ -197,29 +213,6 @@
         }
         
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     //Ende der PHP Funktionen
 ?>
