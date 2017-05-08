@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <meta id="meta" name="viewport" content="width=device-width; initial-scale=1.0" />
+        <title>Selektion</title>
+        
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <div class="haupt-title">
+            <h1>Orderman System<br>Selektion</h1>
+        </div>
+        
+        
+        <div class="form-module">
+          <div>
+            <p>Tisch Nr.: 3</p>
+          </div>
+          <div>
+            <p>Gesamtbetrag: 15,00 $</p>
+          </div>
+          <div id="sparten" class="box-main">
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Preis</th>
+                    <th>Anzahl</th>
+                </tr>
+
+
+                <tr>
+                    <td>Bier</td>
+                    <td>5,00</td>
+                    <td>
+                        <input type="button" value="-" id="0-">
+                        <input class="counter" type="text" readonly value="0" id="0-counter">
+                        <input type="button" value="+" id="0-p">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Wein</td>
+                    <td>10,00</td>
+                    <td>
+                        <input type="button" value="-" id="0-">
+                        <input class="counter" type="text" readonly value="0" id="0-counter">
+                        <input type="button" value="+" id="0-p">
+                    </td>
+                </tr>
+            </table>
+          </div>
+
+          <div class="list">
+            <textarea></textarea>
+          </div>
+            <div class="btns">
+                <button value="back" class="spec_b">Zurück</button>
+                <button  value="send" class="spec_b">Senden</button>
+            </div>
+            
+            <div class="btns">
+                <input type="button" name="gesamt" value="Rechnung gesamt">
+                <input type="button" name="getrennt" value="Rechnung getrennt">
+            </div>
+        </div>
+    </body>
+</html>
