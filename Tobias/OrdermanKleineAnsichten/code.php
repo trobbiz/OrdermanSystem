@@ -1,7 +1,7 @@
 
 <?php
     session_start(); //Session um die Bestellung zu speichern
-    //Hier ist der Abschnitt, der als ajax Schnittstelle fungieren soll
+    //Hier ist der Abschnitt, der als ajax/Javascript Schnittstelle fungieren soll
 
     //Aufruf bei Knopfdruck in "sparteSpeziell.php"
     if(isSet($_POST['spec_b'])){
@@ -26,6 +26,18 @@
         exit;
     }
 
+    //Für Abbruch der Hauptauswahl
+    if(isSet($_POST["clear_session"])){
+        session_unset();
+    }
+
+    //Für Senden der Bestellung
+    if(isSet($_POST["send_order"])){
+        $bestellung = $_SESSION["bestellung"];
+        die(implode(",",$bestellung));
+    }
+
+    //Hilfsfunktion für das Bestellungsarray
     function addOrder($toAdd){
         //Die Sparte von der Bestellung auslesen
         $sparte = $toAdd[0];
@@ -54,13 +66,18 @@
             }
         }
         //Diese Schleife löscht alle indexe aus $indexe
-        for($i=0;$i<=count($indexe);$i++){
-            array_splice($alteBestellung, $indexe[$i],1);
+        if(count($indexe)>0){   //Sonst wird ein Index immer gelöscht
+            for($i=count($indexe)-1;$i>=0;$i--){
+                array_splice($alteBestellung, $indexe[$i],1);
+            }
         }
+        
         //Die neue Bestellung anfügen
         $_SESSION["bestellung"] = array_merge($alteBestellung, $toAdd);
     }
-    //Hier endet der AJAX-Abschnitt
+
+
+    //Hier endet der AJAX/JS-Abschnitt
 
     
     $pageStart='<script src="jquery.js"></script>';//Script wird eingefügt
@@ -134,11 +151,9 @@
         
         if(isSet($_SESSION["bestellung"])){
             $bestellung = $_SESSION["bestellung"];
-            var_dump($bestellung);
             
             for($i=0;$i<count($bestellung);$i++){
                 if($bestellung[$i]==$sparte){  //Der Name der Sparte wird in der Bestellung gesucht
-                    echo "Für diese Sparte liegt eine Bestellung vor";
                     $new = false;   //Keine neue Bestellung
                     $indexOfSparte = $i;    //Index in der die Sparte steht wird gespeichert
                     break;

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta id="meta" name="viewport" content="width=device-width; initial-scale=1.0" />
+    <title>OrdermanSystem Tischauswahl</title>
+
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <div class="tisch-title">
+      <h1>Orderman System<br>Tischauswahl</h1>
+    </div>
+    <div class="form-module">
+      <form>
+        <div>
+          <p>Tisch Nr.:<p>
+          <select name="tische" size="1">
+            <option>1</<option>
+            <option>2</<option>
+            <option>3</<option>
+          </select>
+        <div>
+        <input type="button" name="login" value="Auswaehlen">
+        <input type="button" name="login" value="Offene Tische">
+      </form>
+    </div>
+  </body>
+</html>
