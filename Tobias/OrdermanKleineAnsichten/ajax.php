@@ -50,35 +50,46 @@
         });
     });
     
-    
-    //Knopffunktion für das Abschicken der Bestellung
-    $("#send_order").click(function(){
-        $.post("code.php" , {'send_order':true}, function(data){
-            //Bekommt die Bestellung als String zurück
-            alert(data);
-            var bestellung = data.split(","); //Die einzelnen Gerichte werden getrennt
-            
-            createList(bestellung);
-            
-            
-        });
-        alert("Hier die Bestellung schicken lassen");
+    //Rechnung gesamt
+     $("#rechnung_btn").one("click",function(){
+        alert("Rechnung gesamt");
+        var win = window.open("http://ubuntuserver16/~stleitob", '_blank');
+        win.focus();
+        location.reload();
     });
     
+    
+    //Knopffunktion für das Abschicken der Bestellung
+    $("#send_order").one("click" ,function(){
+            $.post("code.php" , {'send_order':true}, function(data){
+                //Bekommt die Bestellung als String zurück
+                if(data.length>2){  //Wenn nichts drinnen steht, wird nichts gemacht
+                    var bestellung = data.split(","); //Die einzelnen Gerichte werden getrennt
+
+                    createList(bestellung);
+
+                    //Auszubauen
+                    //sendOrder(bestellung);
+                    $.post("code.php", {'clear_session': true});
+                }
+            });
+            alert("Hier die Bestellung schicken lassen");
+    });
+    //Liste wird angezeigt mit dem was bestellt wurde
     function createList(gerichte){
         //Liste durch Tabelle ersetzen
-        var liste = "<ul>";
+        var liste = "<table>";
         
         for(var i=0;i<gerichte.length;i++){
-            if(gerichte[i].split(":")[1]==undefined){
-                alert(gerichte[i]);
-            } else {
+            if(gerichte[i].split(":")[1]!=undefined){
+                //Spartennamen werden ignoriert
                 var listelements = gerichte[i].split(":");
-                liste = liste + "<li>" + listelements[0] + "    " + listelements[1] + "</li>";
+                liste = liste + "<tr><td>" + listelements[0] + "</td><td>" + listelements[1] + "</td></tr>";
+                //Das Gericht und seine Anzahl werden in eine Tabelle geschrieben
             }
         }
         
-        liste = liste + "</ul>";
+        liste = liste + "</table>";
         $("#liste").html(liste);
-    }
+    };
 </script>
