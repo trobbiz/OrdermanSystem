@@ -3,7 +3,7 @@
     <?php
     //Bestellung Aufbau: 2 Typen
     //Typ1 = Spartenname - ignorieren
-    //Typ2 = Bestellung Name:Anz - ausgeben
+    //Typ2 = Bestellung Name:Anz:Preis - ausgeben
     //Noch auszugeben: Tischnummer, Uhrzeit, Kellner
     
     
@@ -62,6 +62,7 @@
                                             if($NameAnz[1]!=""){
                                                 //$NameAnz[0] = Name
                                                 //$NameAnz[1] = Anzahl
+                                                //$NameAnz[2] = Preis
                                                 
                                                 echo $NameAnz[0] . " x " . $NameAnz[1] . "<br>";
 
