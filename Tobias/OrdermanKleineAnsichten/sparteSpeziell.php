@@ -17,7 +17,7 @@
 <button value="back" class="spec_b">Zurück</button>
 <button  value="abort" class="spec_b">Abbrechen</button>
 
-<?php require("ajax.php"); ?>
+<?php include_once("sparteSpeziellCode.php"); ?>
     
 
     

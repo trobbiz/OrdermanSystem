@@ -26,6 +26,21 @@
         exit;
     }
 
+    //Das Bestellte wird in eine Session variable gespeichert
+    if(isSet($_POST["table_number"])){
+        
+        $sessionname = "tisch" . $_POST["table_number"];
+        
+        if(isSet($_SESSION[$sessionname])){
+            if($_SESSION[$sessionname]==null){
+                $_SESSION[$sessionname]=$_POST["liste"];
+                
+                echo "Die Liste beinhaltet: <br>" . var_dump($_SESSION[$sessionname]);
+            }
+        }
+        die("AAAALDA");
+    }
+
     //Für Abbruch der Hauptauswahl
     if(isSet($_POST["clear_session"])){
         session_unset();
@@ -195,7 +210,7 @@
                     });
                 </script>";
                 echo "<td><label id='$i-label'>".$result["name"]."</label></td>";
-                echo "<td>".$result["preis"]."€</td>";
+                echo "<td id='$i-price'>".$result["preis"]."€</td>";
                 echo "<td><input type='button' value='-' id='$i-'><input type='text' readonly value=0 style='text-align: center' id='$i-counter'><input type='button' value='+' id='$i-p'></td>";
             echo "</tr>";
             $anz = $i+1;
