@@ -41,7 +41,7 @@
         var tablenumber = document.getElementById("table_number").innerHTML;
         
         $.post("code.php", {'table_number': tablenumber, 'liste':gerichte}, function(data){
-            alert(data);
+            //Hier die neue Bestellung mit der Liste vergleichen und die Liste dementsprechend aktualisieren
         });
         
         liste = liste + "</table>";

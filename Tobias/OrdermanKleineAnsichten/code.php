@@ -32,13 +32,11 @@
         $sessionname = "tisch" . $_POST["table_number"];
         
         if(isSet($_SESSION[$sessionname])){
-            if($_SESSION[$sessionname]==null){
+            if($_SESSION[$sessionname]=="fresh"){
                 $_SESSION[$sessionname]=$_POST["liste"];
-                
-                echo "Die Liste beinhaltet: <br>" . var_dump($_SESSION[$sessionname]);
             }
         }
-        die("AAAALDA");
+        die($_SESSION[$sessionname]);
     }
 
     //Für Abbruch der Hauptauswahl

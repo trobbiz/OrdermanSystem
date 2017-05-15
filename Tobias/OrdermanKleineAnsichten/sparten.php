@@ -44,7 +44,7 @@
     function getTableNumber(){
         if(isSet($_POST["choose_table"])){
             $sessionname = "tisch" . $_POST["tische"];
-            $_SESSION[$sessionname]=null;
+            $_SESSION[$sessionname]="fresh";
             
             echo "<label id='table_number'>" . $_POST["tische"] . "</label>";
         }
