@@ -19,13 +19,11 @@
           <div>
             <p>Gesamtbetrag: 15,00 $</p>
           </div>
-          <div id="sparten" class="box-main">
-            <?php createSparten(null); ?>
+          <div id="sparten" class="box-select">
+            <?php createSparten(null); ?> 
           </div>
 
-          <div class="list">
             <textarea></textarea>
-          </div>
 
             <div class="btns">
                 <button value="back" class="spec_b">Zurück</button>

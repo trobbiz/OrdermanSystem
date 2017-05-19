@@ -20,9 +20,11 @@
 
         $.post(ajaxurl, data, function (response) {
             // Response sind die Sparten die generiert werden.
-            $('#sparten').removeClass('box-select').addClass('box-main');
+            //$('#sparten').removeClass('box-select').addClass('box-main');
             $('#sparten').html(response);   //Die Sparten werden hier wieder hergeschrieben
         });
+        
+        $('#sparten').scrollTop(0);
     });
     
     function getBestellungen(sparte, anz){

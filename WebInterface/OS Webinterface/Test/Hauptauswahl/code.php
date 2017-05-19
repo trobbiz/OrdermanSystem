@@ -72,7 +72,7 @@
             echo "<script> $(document).ready(function(){
             $('#$name').click(function(){
                 $('#sparten').load('sparteSpeziell.php',{ sparte: '$name' });
-                $('#sparten').removeClass('box-main').addClass('box-select');
+                //$('#sparten').removeClass('box-main').addClass('box-select');
             });
             });</script>";
         }
@@ -140,9 +140,9 @@
                         document.getElementById('$i-counter').value = val;
                     });
                 </script>";
-                echo "<td class='product'><label id='$i-label'>".$result["name"]."</label></td>";
-                echo "<td class='amount'>".$result["preis"]."€</td>";
-                echo "<td class='selection'><input type='button' value='-' id='$i-'><input class='counter' type='text' readonly value=0 id='$i-counter'><input type='button' value='+' id='$i-p'></td>";
+                echo "<td><label id='$i-label'>".$result["name"]."</label></td>";
+                echo "<td>".$result["preis"]."€</td>";
+                echo "<td><input type='button' value='-' id='$i-'><input class='counter' type='text' readonly value=0 id='$i-counter'><input type='button' value='+' id='$i-p'></td>";
             echo "</tr>";
             $anz = $i+1;
         }
